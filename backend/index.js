@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose')
 const router = require('./routes/router');
 
@@ -11,6 +12,7 @@ app.get('/', (_, res) => {
   res.sendFile(`${__dirname}/index.html`);
 });
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
