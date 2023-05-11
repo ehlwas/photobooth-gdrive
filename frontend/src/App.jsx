@@ -13,7 +13,7 @@ function App() {
   })
   
   useEffect(() => {
-    axios.get('getColor')
+    axios.get('https://photobooth-gdrive.onrender.com/getColor')
       .then(response => {
         if (response.data.length !== 0)
         {
@@ -25,7 +25,7 @@ function App() {
   const colorSubmit = async (e) => {
     e.preventDefault();
 
-    await axios.post('updateColor', colorHandler)
+    await axios.post('https://photobooth-gdrive.onrender.com/updateColor', colorHandler)
     .then(response => {
         console.log(response);
     })
