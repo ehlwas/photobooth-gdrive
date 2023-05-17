@@ -32,7 +32,7 @@ const NavBar = (props) => {
       }, []);
 
     const getLogo = async () => {
-        await axios.get('https://photobooth-gdrive.onrender.com/getLogo')
+        await axios.get('http://localhost:8080/getLogo')
           .then(response => {
             setLogoHandler(response.data[0]);
           })
@@ -47,7 +47,7 @@ const NavBar = (props) => {
         const formElem = document.querySelector('#form-logo');
         // const data = new FormData(formElem)
         console.log(formElem)
-        await axios.post('https://photobooth-gdrive.onrender.com/uploadLogo', formElem)
+        await axios.post('http://localhost:8080/uploadLogo', formElem)
         .then(response => {
             console.log(response);
             getLogo();

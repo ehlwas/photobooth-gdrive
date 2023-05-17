@@ -1,40 +1,47 @@
-import MainPage from "./components/main/MainPage";
-import NavBar from "./components/nav/NavBar";
+import IntroLogo from "./components/intrologo/IntroLogo"
+import Camera from "./components/camera/Camera"
+import Gallery from "./components/gallery/Gallery"
 
 import { useState, useEffect } from "react"
 import axios from 'axios'
 
 function App() {
-  const [colorHandler, setColorHandler] = useState({
-    _id: '',
-    navColor: '',
-    bodyColor: '',
-    googleDriveId: "1WY0MWd9oaLKWVi2TFbXaoyCJU-LEAgZ8"
-  })
-  
   useEffect(() => {
-    axios.get('https://photobooth-gdrive.onrender.com/getColor')
-      .then(response => {
-        if (response.data.length !== 0)
-        {
-          setColorHandler(response.data[0])
-        }
-      })
+    refresh()
   }, [])
 
-  const colorSubmit = async (e) => {
-    e.preventDefault();
+  // CAMERA AND PREVIEW COMPONENT FUNCTIONS
 
-    await axios.post('https://photobooth-gdrive.onrender.com/updateColor', colorHandler)
-    .then(response => {
-        console.log(response);
-    })
+
+
+  // GALLERY COMPONENT FUNCTIONS
+  const [data, setData] = useState([]);
+    
+  const deleteImage = async (id) => {
+    await axios.delete(`http://localhost:8080/delete/${id}`)
+      .then(response => {
+        console.log(response)
+        refresh()
+      })
+  }
+
+  const refresh = () => {
+    axios.get('http://localhost:8080/list')
+      .then(response => {
+        setData(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   return (
     <>
-      <NavBar colorHandler={colorHandler} setColorHandler={setColorHandler} colorSubmit={colorSubmit} />
-      <MainPage bodyColor={colorHandler.bodyColor} />
+      <div>
+        <IntroLogo />
+        <Camera />
+        {/* <Gallery data={data} deleteImage={deleteImage} /> */}
+      </div>
     </>
   )
 }

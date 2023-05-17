@@ -28,7 +28,7 @@ function MainPage(props) {
         e.preventDefault();
         setLoadingCapture(true)
 
-        await axios.post('https://photobooth-gdrive.onrender.com/upload', formData)
+        await axios.post('http://localhost:8080/upload', formData)
         .then(response => {
             console.log(response);
             setLoadingCapture(false)
@@ -37,7 +37,7 @@ function MainPage(props) {
     }
   
     useEffect(() => {
-      axios.get('https://photobooth-gdrive.onrender.com/list')
+      axios.get('http://localhost:8080/list')
         .then(response => {
             setData(response.data);
         })
@@ -47,7 +47,7 @@ function MainPage(props) {
     }, []);
     
     const refresh = () => {
-      axios.get('https://photobooth-gdrive.onrender.com/list')
+      axios.get('http://localhost:8080/list')
         .then(response => {
             setData(response.data);
         })
@@ -66,7 +66,7 @@ function MainPage(props) {
     }
 
     const deleteImage = async (id) => {
-        await axios.delete(`https://photobooth-gdrive.onrender.com/delete/${id}`)
+        await axios.delete(`http://localhost:8080/delete/${id}`)
             .then(response => {
                 console.log(response)
                 refresh()
